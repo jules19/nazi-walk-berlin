@@ -53,7 +53,8 @@ self.addEventListener("fetch", e => {
         if (hit) return hit;
         try {
           const res = await fetch(e.request);
-          if (res.ok) cache.put(e.request, res.clone());
+          // opaque = no-cors <img> load; still cacheable and servable
+          if (res.ok || res.type === "opaque") cache.put(e.request, res.clone());
           return res;
         } catch (err) {
           // offline and tile not cached: transparent 1×1 png so the map doesn't break

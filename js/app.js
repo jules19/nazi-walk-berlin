@@ -67,6 +67,7 @@ function initMap() {
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     className: "map-tiles",
+    crossOrigin: true,
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
 
@@ -433,8 +434,13 @@ async function downloadTiles() {
       try {
         const hit = await cache.match(url);
         if (!hit) {
-          const res = await fetch(url, { mode: "cors" });
-          if (res.ok) await cache.put(url, res);
+          let res;
+          try {
+            res = await fetch(url, { mode: "cors" });
+          } catch (corsErr) {
+            res = await fetch(url, { mode: "no-cors" }); // opaque fallback
+          }
+          if (res.ok || res.type === "opaque") await cache.put(url, res);
           else failed++;
         }
       } catch (e) { failed++; }
