@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Berlin 1933–1945 — History Walk</title>
+  <meta name="description" content="A self-guided full-day walk through the sites of the Third Reich in central Berlin. Works offline.">
+  <meta name="theme-color" content="#14161c">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Berlin 33–45">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ======== MAP VIEW ======== -->
+  <main id="view-map" class="view active">
+    <div id="map"></div>
+
+    <div id="map-topbar">
+      <div id="next-banner" class="hidden">
+        <button id="next-banner-btn"></button>
+      </div>
+    </div>
+
+    <div id="map-controls">
+      <button id="btn-locate" class="map-btn" title="My location" aria-label="My location">◎</button>
+      <button id="btn-fitroute" class="map-btn" title="Show whole route" aria-label="Show whole route">⛶</button>
+    </div>
+
+    <!-- bottom sheet for stop details -->
+    <div id="sheet" class="sheet-hidden">
+      <div id="sheet-grip" title="Drag or tap to expand"><span></span></div>
+      <div id="sheet-content"></div>
+    </div>
+  </main>
+
+  <!-- ======== STOP LIST VIEW ======== -->
+  <main id="view-stops" class="view">
+    <header class="page-head">
+      <h1>The Walk</h1>
+      <p id="progress-line"></p>
+      <div id="progress-bar"><div id="progress-fill"></div></div>
+    </header>
+    <ol id="stop-list"></ol>
+  </main>
+
+  <!-- ======== EXTENSIONS VIEW ======== -->
+  <main id="view-extras" class="view">
+    <header class="page-head">
+      <h1>Beyond the Walk</h1>
+      <p>Half-day trips by S-Bahn — each one earns its journey.</p>
+    </header>
+    <div id="extras-list"></div>
+  </main>
+
+  <!-- ======== INFO VIEW ======== -->
+  <main id="view-info" class="view">
+    <header class="page-head">
+      <h1>About this Walk</h1>
+    </header>
+    <div id="info-content"></div>
+
+    <section class="info-card" id="offline-card">
+      <h2>Offline maps</h2>
+      <p>Save the map tiles for the whole route to your phone while you're on WiFi. After that, the entire app — maps, route and all stop content — works with no connection and no roaming charges.</p>
+      <button id="btn-download-tiles" class="big-btn">Download offline maps (~8 MB)</button>
+      <div id="dl-progress" class="hidden">
+        <div id="dl-bar"><div id="dl-fill"></div></div>
+        <p id="dl-status"></p>
+      </div>
+      <p id="dl-done" class="hidden ok">✓ Offline maps saved. You're good to go.</p>
+    </section>
+
+    <section class="info-card">
+      <h2>Install on your iPhone</h2>
+      <ol class="install-steps">
+        <li>Open this page in <strong>Safari</strong> (not Chrome).</li>
+        <li>Tap the <strong>Share</strong> button (square with arrow).</li>
+        <li>Scroll down and tap <strong>“Add to Home Screen”</strong>.</li>
+        <li>Open it from the home screen icon — it runs full-screen like an app.</li>
+        <li>Tap “Download offline maps” above while on WiFi.</li>
+      </ol>
+    </section>
+
+    <section class="info-card">
+      <h2>Reset</h2>
+      <button id="btn-reset" class="small-btn">Clear visited progress</button>
+    </section>
+
+    <footer id="credits">
+      <p>Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.</p>
+      <p>Built as a personal, non-commercial history guide. Verify opening hours before visiting.</p>
+    </footer>
+  </main>
+
+  <!-- ======== TAB BAR ======== -->
+  <nav id="tabbar">
+    <button data-view="map" class="tab active"><span class="tab-ico">🗺</span>Map</button>
+    <button data-view="stops" class="tab"><span class="tab-ico">①</span>Stops</button>
+    <button data-view="extras" class="tab"><span class="tab-ico">🚆</span>Extras</button>
+    <button data-view="info" class="tab"><span class="tab-ico">ℹ︎</span>Info</button>
+  </nav>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/route.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
