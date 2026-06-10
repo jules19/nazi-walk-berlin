@@ -491,7 +491,13 @@ function boot() {
   $("#btn-download-tiles").addEventListener("click", downloadTiles);
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js").catch(() => { /* offline-first is best effort */ });
+    navigator.serviceWorker.register("sw.js").then(reg => {
+      // iOS PWAs resume from a snapshot without a page load, so the
+      // browser never re-checks sw.js on its own — do it on foreground
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") reg.update().catch(() => {});
+      });
+    }).catch(() => { /* offline-first is best effort */ });
   }
 }
 boot();

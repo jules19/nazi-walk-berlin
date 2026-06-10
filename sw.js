@@ -1,5 +1,5 @@
 /* Service worker: app shell precache + offline map tiles */
-const VERSION = "v2";
+const VERSION = "v3";
 const SHELL_CACHE = `bw-shell-${VERSION}`;
 const TILE_CACHE = "bw-tiles-v1"; // shared with the in-app downloader; not versioned
 
@@ -38,7 +38,14 @@ self.addEventListener("activate", e => {
           .filter(k => k.startsWith("bw-shell-") && k !== SHELL_CACHE)
           .map(k => caches.delete(k))
       )
-    ).then(() => self.clients.claim())
+    )
+    .then(() => self.clients.claim())
+    // reload open pages so a new version applies immediately instead of
+    // showing stale UI until the next launch
+    .then(() => self.clients.matchAll({ type: "window" }))
+    .then(clients => Promise.all(
+      clients.map(c => c.navigate(c.url).catch(() => {}))
+    ))
   );
 });
 
