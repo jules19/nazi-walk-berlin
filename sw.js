@@ -1,5 +1,5 @@
 /* Service worker: app shell precache + offline map tiles */
-const VERSION = "v1";
+const VERSION = "v2";
 const SHELL_CACHE = `bw-shell-${VERSION}`;
 const TILE_CACHE = "bw-tiles-v1"; // shared with the in-app downloader; not versioned
 

@@ -58,6 +58,13 @@ try {
   // navigate next
   $("#sheet-next").click();
   checks.push(["next navigates to 11", /Chancellery/.test($("#sheet-content").innerHTML)]);
+  // dismissal paths: close button, then re-open and Map tab tap
+  $("#sheet-close").click();
+  checks.push(["close button hides sheet", $("#sheet").classList.contains("sheet-hidden")]);
+  window.document.querySelectorAll("#stop-list .stop-row")[0].click();
+  checks.push(["sheet reopens", !$("#sheet").classList.contains("sheet-hidden")]);
+  window.document.querySelector('#tabbar .tab[data-view="map"]').click();
+  checks.push(["map tab tap hides sheet", $("#sheet").classList.contains("sheet-hidden")]);
 } catch (e) {
   errors.push("interaction: " + e.message);
 }

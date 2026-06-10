@@ -48,6 +48,11 @@ function walkMins(m) { return Math.max(1, Math.round(m / 75)); } // ~4.5 km/h
 /* ---------- tabs ---------- */
 document.querySelectorAll("#tabbar .tab").forEach(btn => {
   btn.addEventListener("click", () => {
+    // tapping Map while already there dismisses the stop sheet
+    if (btn.dataset.view === "map" && btn.classList.contains("active")) {
+      setSheet("hidden");
+      return;
+    }
     document.querySelectorAll("#tabbar .tab").forEach(b => b.classList.remove("active"));
     document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
     btn.classList.add("active");
@@ -101,6 +106,9 @@ function initMap() {
   });
 
   fitRoute();
+
+  // tapping the bare map dismisses the stop sheet
+  map.on("click", () => setSheet("hidden"));
 
   $("#btn-fitroute").addEventListener("click", fitRoute);
   $("#btn-locate").addEventListener("click", toggleLocate);
@@ -191,6 +199,7 @@ function setSheet(state) {
 $("#sheet-grip").addEventListener("click", () => {
   setSheet(sheetState === "full" ? "peek" : "full");
 });
+$("#sheet-close").addEventListener("click", () => setSheet("hidden"));
 let touchY = null;
 $("#sheet-grip").addEventListener("touchstart", e => { touchY = e.touches[0].clientY; }, { passive: true });
 $("#sheet-grip").addEventListener("touchend", e => {
