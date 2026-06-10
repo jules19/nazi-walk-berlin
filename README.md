@@ -25,15 +25,14 @@ targets, route + facts fully offline, dusk-timed finale.
 - **Practical guidance**: December timing, memorial etiquette, German law on
   Nazi symbols (§86a StGB), Stolpersteine explainer, source notes.
 
-## Hosting (required once)
+## Hosting
 
-Service workers need HTTPS, so the app must be hosted — GitHub Pages is the
-zero-cost way:
+The app is live at **https://jules19.github.io/nazi-walk-berlin/**.
 
-1. Push this repo to GitHub (already done if you're reading this there).
-2. Repo **Settings → Pages → Source**: deploy from branch, select the branch,
-   root folder (`.nojekyll` is already in place).
-3. The app appears at `https://<user>.github.io/nazi-walk-berlin/`.
+GitHub Pages serves the `gh-pages` branch; the "Publish to GitHub Pages"
+workflow mirrors `main` to `gh-pages` automatically, so pushing to `main`
+is all it takes to deploy. (Service workers need HTTPS, which Pages
+provides; `.nojekyll` keeps Pages from mangling the files.)
 
 ## Install on iPhone
 
